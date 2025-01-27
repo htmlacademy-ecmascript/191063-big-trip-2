@@ -10,19 +10,22 @@ export default class TripPresenter {
   tripComponent = new TripView();
   pointListComponent = new PointListView();
 
-  constructor({tripContainer}) {
+  constructor({tripContainer, pointsModel}) {
     this.tripContainer = tripContainer;
+    this.pointsModel = pointsModel;
   }
 
   init() {
+    this.tripPoints = [...this.pointsModel.getPoints()];
+
     render(this.tripComponent, this.tripContainer);
     render(new SortView(), this.tripComponent.getElement());
     render(this.pointListComponent, this.tripComponent.getElement());
     render(new PointEditView(), this.pointListComponent.getElement());
     render(new PointAddView(), this.pointListComponent.getElement());
 
-    for (let i = 0; i < 3; i ++) {
-      render(new PointView(), this.pointListComponent.getElement());
+    for (let i = 0; i < this.tripPoints.length; i ++) {
+      render(new PointView({point: this.tripPoints[i]}), this.pointListComponent.getElement());
     }
   }
 }
