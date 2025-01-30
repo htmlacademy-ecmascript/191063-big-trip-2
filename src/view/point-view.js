@@ -11,15 +11,16 @@ function createOfferTemplate(offer) {
   );
 }
 
-function createOffersTempate(offers) {
-  const offersListElements = offers.reduce((finalString, currentOffer) => finalString + createOfferTemplate(currentOffer), '');
-
-  return (
-    `<h4 class="visually-hidden">Offers:</h4>
+function createOfferListTempate(offers) {
+  if (offers.length > 0) {
+    return (
+      `<h4 class="visually-hidden">Offers:</h4>
     <ul class="event__selected-offers">
-    ${offersListElements}
+    ${(offers.map(createOfferTemplate)).join('')}
     </ul>`
-  );
+    );
+  }
+  return '';
 }
 
 function favoriteButtonTemplate(isFavorite) {
@@ -33,12 +34,15 @@ function favoriteButtonTemplate(isFavorite) {
   );
 }
 
-function createPointViewTemplate(point, currentDestination, selectedOffers) {
+function createPointTemplate(point, destinations, offers) {
   const {basePrice, dateFrom, dateTo, isFavorite, type} = point;
+  const pointDestination = destinations.find((destination) => destination.id === point.destination);
+  const typeOffers = offers.find((offer) => offer.type === point.type).offers;
+  const pointOffers = typeOffers.filter((offer) => point.offers.includes(offer.id));
 
   const day = getDay(dateFrom);
   const iconPath = `./img/icons/${type}.png`;
-  const destinationCity = currentDestination.name;
+  const destinationCity = pointDestination.name;
   const eventTitle = `${type} ${destinationCity}`;
   const startTime = getTime(dateFrom);
   const endTime = getTime(dateTo);
@@ -63,7 +67,7 @@ function createPointViewTemplate(point, currentDestination, selectedOffers) {
                 <p class="event__price">
                   &euro;&nbsp;<span class="event__price-value">${basePrice}</span>
                 </p>
-                ${createOffersTempate(selectedOffers)}
+                ${createOfferListTempate(pointOffers)}
                 ${favoriteButtonTemplate(isFavorite)}
                 <button class="event__rollup-btn" type="button">
                   <span class="visually-hidden">Open event</span>
@@ -74,14 +78,14 @@ function createPointViewTemplate(point, currentDestination, selectedOffers) {
 }
 
 export default class PointView {
-  constructor({point, currentDestination, selectedOffers}) {
+  constructor({point, destinations, offers}) {
     this.point = point;
-    this.currentDestination = currentDestination;
-    this.selectedOffers = selectedOffers;
+    this.destinations = destinations;
+    this.offers = offers;
   }
 
   getTemplate() {
-    return createPointViewTemplate(this.point, this.currentDestination, this.selectedOffers);
+    return createPointTemplate(this.point, this.destinations, this.offers);
   }
 
   getElement() {
