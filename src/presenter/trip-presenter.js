@@ -1,30 +1,33 @@
-import { render } from '../render.js';
 import TripView from '../view/trip-view.js';
 import SortView from '../view/sort-view.js';
-import EventListView from '../view/event-list-view.js';
-import EventView from '../view/event-view.js';
-import EventAddView from '../view/event-add-view.js';
-import EventEditView from '../view/event-edit-view.js';
-// import EventListEmptyView from '../view/event-list-empty-view.js';
-// import EventListLoadingView from '../view/event-list-loading-view.js';
+import PointListView from '../view/point-list-view.js';
+import PointView from '../view/point-view.js';
+import PointAddView from '../view/point-add-view.js';
+import PointEditView from '../view/point-edit-view.js';
+import { render } from '../render.js';
 
 export default class TripPresenter {
   tripComponent = new TripView();
-  eventListComponent = new EventListView();
+  pointListComponent = new PointListView();
 
-  constructor({tripContainer}) {
+  constructor({tripContainer, pointsModel}) {
     this.tripContainer = tripContainer;
+    this.pointsModel = pointsModel;
   }
 
   init() {
+    const points = [...this.pointsModel.getPoints()];
+    const destinations = [...this.pointsModel.getDestinations()];
+    const offers = [...this.pointsModel.getOffers()];
+
     render(this.tripComponent, this.tripContainer);
     render(new SortView(), this.tripComponent.getElement());
-    render(this.eventListComponent, this.tripComponent.getElement());
-    render(new EventEditView(), this.eventListComponent.getElement());
-    render(new EventAddView(), this.eventListComponent.getElement());
+    render(this.pointListComponent, this.tripComponent.getElement());
+    render(new PointEditView({point: points[0], destinations, offers}), this.pointListComponent.getElement());
+    render(new PointAddView(), this.pointListComponent.getElement());
 
-    for (let i = 0; i < 3; i ++) {
-      render(new EventView(), this.eventListComponent.getElement());
+    for (const point of points) {
+      render(new PointView({point, destinations, offers}), this.pointListComponent.getElement());
     }
   }
 }

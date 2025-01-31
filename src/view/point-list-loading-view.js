@@ -1,12 +1,12 @@
 import { createElement } from '../render.js';
 
-function createEventListLoadingTemplate() {
+function createPointListLoadingTemplate() {
   return '<p class="trip-events__msg">Loading...</p>';
 }
 
-export default class EventListLoadingView {
+export default class PointListLoadingView {
   getTemplate() {
-    return createEventListLoadingTemplate();
+    return createPointListLoadingTemplate();
   }
 
   getElement() {
