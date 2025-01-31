@@ -12,6 +12,10 @@ function getRandomArrayElement(array) {
   return array[getRandomInteger(array.length)];
 }
 
+function getFullDate(date) {
+  return dayjs(date).format('DD/MM/YY HH:mm');
+}
+
 function getDay(date) {
   return dayjs(date).format('MMM DD');
 }
@@ -36,10 +40,32 @@ function getEventDuration(earlierDate, laterDate) {
   }
 }
 
+function transformIntoKebabCase(string) {
+  return string.replace(/\s+/g, '-').toLowerCase();
+}
+
+function capitalizeString(string) {
+  return string[0].toUpperCase() + string.slice(1);
+}
+
+function createIdGenerator() {
+  let id = 1;
+
+  return function() {
+    return id++;
+  };
+}
+
+const idGenerator = createIdGenerator();
+
 export {
   getRandomInteger,
   getRandomArrayElement,
+  getFullDate,
   getDay,
   getTime,
-  getEventDuration
+  getEventDuration,
+  transformIntoKebabCase,
+  capitalizeString,
+  idGenerator
 };
