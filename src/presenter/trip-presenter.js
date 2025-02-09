@@ -13,24 +13,36 @@ export default class TripPresenter {
   #tripComponent = new TripView();
   #pointListComponent = new PointListView();
 
+  #tripPoints = [];
+  #tripDestinations = [];
+  #tripOffers = [];
+
   constructor({tripContainer, pointsModel}) {
     this.#tripContainer = tripContainer;
     this.#pointsModel = pointsModel;
   }
 
   init() {
-    const points = [...this.#pointsModel.points];
-    const destinations = [...this.#pointsModel.destinations];
-    const offers = [...this.#pointsModel.offers];
+    this.#tripPoints = [...this.#pointsModel.points];
+    this.#tripDestinations = [...this.#pointsModel.destinations];
+    this.#tripOffers = [...this.#pointsModel.offers];
 
     render(this.#tripComponent, this.#tripContainer);
     render(new SortView(), this.#tripComponent.element);
     render(this.#pointListComponent, this.#tripComponent.element);
-    render(new PointEditView({point: points[0], destinations, offers}), this.#pointListComponent.element);
+    render(new PointEditView({
+      point: this.#tripPoints[0],
+      destinations: this.#tripDestinations,
+      offers: this.#tripOffers
+    }), this.#pointListComponent.element);
     render(new PointAddView(), this.#pointListComponent.element);
 
-    for (const point of points) {
-      render(new PointView({point, destinations, offers}), this.#pointListComponent.element);
+    for (const point of this.#tripPoints) {
+      render(new PointView({
+        point,
+        destinations: this.#tripDestinations,
+        offers: this.#tripOffers
+      }), this.#pointListComponent.element);
     }
   }
 }
