@@ -2,7 +2,6 @@ import TripView from '../view/trip-view.js';
 import SortView from '../view/sort-view.js';
 import PointListView from '../view/point-list-view.js';
 import PointView from '../view/point-view.js';
-import PointAddView from '../view/point-add-view.js';
 import PointEditView from '../view/point-edit-view.js';
 import { render } from '../framework/render.js';
 
@@ -35,14 +34,19 @@ export default class TripPresenter {
       destinations: this.#tripDestinations,
       offers: this.#tripOffers
     }), this.#pointListComponent.element);
-    render(new PointAddView(), this.#pointListComponent.element);
 
     for (const point of this.#tripPoints) {
-      render(new PointView({
-        point,
-        destinations: this.#tripDestinations,
-        offers: this.#tripOffers
-      }), this.#pointListComponent.element);
+      this.#renderPoint(point);
     }
+  }
+
+  #renderPoint(point) {
+    const pointComponent = new PointView({
+      point,
+      destinations: this.#tripDestinations,
+      offers: this.#tripOffers
+    });
+
+    render(pointComponent, this.#pointListComponent.element);
   }
 }
