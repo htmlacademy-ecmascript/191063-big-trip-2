@@ -1,6 +1,7 @@
 import FilterView from './view/filter-view.js';
 import TripPresenter from './presenter/trip-presenter.js';
 import PointsModel from './model/points-model.js';
+import {generateFilter} from './mock/filter.js';
 import { render } from './framework/render.js';
 
 const pageHeaderElement = document.querySelector('.page-header');
@@ -15,6 +16,8 @@ const tripPresenter = new TripPresenter({
   pointsModel,
 });
 
-render(new FilterView(), filtersElement);
+const filters = generateFilter(pointsModel.points);
+
+render(new FilterView({filters}), filtersElement);
 
 tripPresenter.init();
