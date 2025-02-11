@@ -10,4 +10,11 @@ const EVENT_TYPES = [
   'restaurant'
 ];
 
-export {EVENT_TYPES};
+const FilterType = {
+  EVERYTHING: 'everything',
+  FUTURE: 'future',
+  PRESENT: 'present',
+  PAST: 'past',
+};
+
+export {EVENT_TYPES, FilterType};
