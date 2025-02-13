@@ -36,9 +36,8 @@ function getEventDuration(earlierDate, laterDate) {
     return differenceInMinutes;
   } else if (totalDifferenceInMinutes < MINUTES_IN_DAY) {
     return `${differenceInHours} ${differenceInMinutes}`;
-  } else {
-    return `${differenceInDays} ${differenceInHours} ${differenceInMinutes}`;
   }
+  return `${differenceInDays} ${differenceInHours} ${differenceInMinutes}`;
 }
 
 function transformIntoKebabCase(string) {
@@ -64,9 +63,8 @@ function compareDates({dateFrom, dateTo}) {
     return 'future';
   } else if (new Date(dateTo) < new Date()) {
     return 'past';
-  } else {
-    return 'present';
   }
+  return 'present';
 }
 
 const filter = {
