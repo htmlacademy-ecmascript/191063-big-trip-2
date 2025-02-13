@@ -38,16 +38,17 @@ export default class TripPresenter {
     render(this.#sortComponent, this.#tripComponent.element, RenderPosition.AFTERBEGIN);
   }
 
-  #handlePointChange(updatedPoint) {
+  #handlePointChange = (updatedPoint) => {
     this.#tripPoints = updateItem(this.#tripPoints, updatedPoint);
     this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
-  }
+  };
 
   #renderPoint(point) {
     const pointPresenter = new PointPresenter({
       pointListContainer: this.#pointListComponent.element,
       tripDestinations: this.#tripDestinations,
       tripOffers: this.#tripOffers,
+      onDataChange: this.#handlePointChange,
     });
 
     pointPresenter.init(point);
