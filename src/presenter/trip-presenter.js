@@ -1,10 +1,9 @@
 import TripView from '../view/trip-view.js';
 import SortView from '../view/sort-view.js';
 import PointListView from '../view/point-list-view.js';
-import PointView from '../view/point-view.js';
-import PointEditView from '../view/point-edit-view.js';
 import PointListEmptyView from '../view/point-list-empty-view.js';
-import {render, RenderPosition, replace} from '../framework/render.js';
+import PointPresenter from './point-presenter.js';
+import {render, RenderPosition} from '../framework/render.js';
 
 export default class TripPresenter {
   #tripContainer = null;
@@ -37,47 +36,13 @@ export default class TripPresenter {
   }
 
   #renderPoint(point) {
-    const escKeyDownHandler = (evt) => {
-      if (evt.key === 'Escape') {
-        evt.preventDefault();
-        replaceFormToCard();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      }
-    };
-
-    const pointComponent = new PointView({
-      point,
-      destinations: this.#tripDestinations,
-      offers: this.#tripOffers,
-      onEditClick: () => {
-        replaceCardToForm();
-        document.addEventListener('keydown', escKeyDownHandler);
-      }
+    const pointPresenter = new PointPresenter({
+      pointListContainer: this.#pointListComponent.element,
+      tripDestinations: this.#tripDestinations,
+      tripOffers: this.#tripOffers,
     });
 
-    const pointEditComponent = new PointEditView({
-      point,
-      destinations: this.#tripDestinations,
-      offers: this.#tripOffers,
-      onFormSubmit: () => {
-        replaceFormToCard();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      },
-      onEditClick: () => {
-        replaceFormToCard();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      }
-    });
-
-    function replaceCardToForm() {
-      replace(pointEditComponent, pointComponent);
-    }
-
-    function replaceFormToCard() {
-      replace(pointComponent, pointEditComponent);
-    }
-
-    render(pointComponent, this.#pointListComponent.element);
+    pointPresenter.init(point);
   }
 
   #renderPoints() {
