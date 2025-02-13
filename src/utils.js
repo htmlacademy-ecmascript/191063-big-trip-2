@@ -74,6 +74,10 @@ const filter = {
   [FilterType.PAST]: (events) => events.filter((event) => compareDates(event) === 'past'),
 };
 
+function updateItem(currentItems, updatedItem) {
+  return currentItems.map((item) => item.id === updatedItem.id ? updatedItem : item);
+}
+
 export {
   getRandomInteger,
   getRandomArrayElement,
@@ -85,4 +89,5 @@ export {
   capitalizeString,
   idGenerator,
   filter,
+  updateItem,
 };

@@ -3,7 +3,8 @@ import SortView from '../view/sort-view.js';
 import PointListView from '../view/point-list-view.js';
 import PointListEmptyView from '../view/point-list-empty-view.js';
 import PointPresenter from './point-presenter.js';
-import {render, RenderPosition} from '../framework/render.js';
+import { updateItem } from '../utils.js';
+import { render, RenderPosition } from '../framework/render.js';
 
 export default class TripPresenter {
   #tripContainer = null;
@@ -35,6 +36,11 @@ export default class TripPresenter {
 
   #renderSort() {
     render(this.#sortComponent, this.#tripComponent.element, RenderPosition.AFTERBEGIN);
+  }
+
+  #handlePointChange(updatedPoint) {
+    this.#tripPoints = updateItem(this.#tripPoints, updatedPoint);
+    this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
   }
 
   #renderPoint(point) {
