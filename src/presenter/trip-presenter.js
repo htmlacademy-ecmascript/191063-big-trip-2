@@ -38,6 +38,10 @@ export default class TripPresenter {
     render(this.#sortComponent, this.#tripComponent.element, RenderPosition.AFTERBEGIN);
   }
 
+  #handleModeChange = () => {
+    this.#pointPresenters.forEach((presenter) => presenter.resetView());
+  };
+
   #handlePointChange = (updatedPoint) => {
     this.#tripPoints = updateItem(this.#tripPoints, updatedPoint);
     this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
@@ -49,6 +53,7 @@ export default class TripPresenter {
       tripDestinations: this.#tripDestinations,
       tripOffers: this.#tripOffers,
       onDataChange: this.#handlePointChange,
+      onModeChange: this.#handleModeChange,
     });
 
     pointPresenter.init(point);
