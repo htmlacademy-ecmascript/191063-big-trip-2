@@ -12,7 +12,7 @@ export default class TripPresenter {
 
   #tripComponent = new TripView();
   #pointListComponent = new PointListView();
-  #sortComponent = new SortView();
+  #sortComponent = null;
   #pointListEmptyComponent = new PointListEmptyView();
 
   #tripPoints = [];
@@ -35,6 +35,10 @@ export default class TripPresenter {
   }
 
   #renderSort() {
+    this.#sortComponent = new SortView({
+      onSortTypeChange: this.#handleSortTypeChange,
+    });
+
     render(this.#sortComponent, this.#tripComponent.element, RenderPosition.AFTERBEGIN);
   }
 
@@ -45,6 +49,10 @@ export default class TripPresenter {
   #handlePointChange = (updatedPoint) => {
     this.#tripPoints = updateItem(this.#tripPoints, updatedPoint);
     this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
+  };
+
+  #handleSortTypeChange = (sortType) => {
+
   };
 
   #renderPoint(point) {
