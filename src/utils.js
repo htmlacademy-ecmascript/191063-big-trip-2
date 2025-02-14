@@ -79,7 +79,7 @@ function updateItem(currentItems, updatedItem) {
 }
 
 function sortByTime(pointA, pointB) {
-  return dayjs(pointB.dateFrom).diff(pointB.dateTo) - dayjs(pointA.dateFrom).diff(pointA.dateTo);
+  return dayjs(pointB.dateTo).diff(pointB.dateFrom) - dayjs(pointA.dateTo).diff(pointA.dateFrom);
 }
 
 function sortByPrice(pointA, pointB) {
