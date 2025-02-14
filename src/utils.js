@@ -77,6 +77,9 @@ const filter = {
 function updateItem(currentItems, updatedItem) {
   return currentItems.map((item) => item.id === updatedItem.id ? updatedItem : item);
 }
+function sortByDay(pointA, pointB) {
+  return dayjs(pointA.dateFrom).diff(pointB.dateFrom);
+}
 
 function sortByTime(pointA, pointB) {
   return dayjs(pointB.dateTo).diff(pointB.dateFrom) - dayjs(pointA.dateTo).diff(pointA.dateFrom);
@@ -98,6 +101,7 @@ export {
   idGenerator,
   filter,
   updateItem,
+  sortByDay,
   sortByTime,
   sortByPrice,
 };
