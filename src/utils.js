@@ -78,6 +78,14 @@ function updateItem(currentItems, updatedItem) {
   return currentItems.map((item) => item.id === updatedItem.id ? updatedItem : item);
 }
 
+function sortByTime(pointA, pointB) {
+  return dayjs(pointB.dateFrom).diff(pointB.dateTo) - dayjs(pointA.dateFrom).diff(pointA.dateTo);
+}
+
+function sortByPrice(pointA, pointB) {
+  return pointB.basePrice - pointA.basePrice;
+}
+
 export {
   getRandomInteger,
   getRandomArrayElement,
@@ -90,4 +98,6 @@ export {
   idGenerator,
   filter,
   updateItem,
+  sortByTime,
+  sortByPrice,
 };
