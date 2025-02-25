@@ -10,24 +10,21 @@ const EVENT_TYPES = [
   'restaurant'
 ];
 
+const DateFormat = {
+  DAY: 'MMM DD',
+  TIME: 'HH:mm',
+  DATE: 'DD/MM/YY HH:mm'
+};
+
 const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
   PRESENT: 'present',
-  PAST: 'past',
+  PAST: 'past'
 };
 
-const SortType = {
-  DAY: 'day',
-  TIME: 'time',
-  PRICE: 'price',
+export {
+  EVENT_TYPES,
+  DateFormat,
+  FilterType,
 };
-
-const NoEventsText = {
-  EVERYTHING: 'Click New Event to create your first point',
-  PAST: 'There are no past events now',
-  PRESENT: 'There are no present events now',
-  FUTURE: 'There are no future events now',
-};
-
-export {EVENT_TYPES, FilterType, SortType, NoEventsText};
