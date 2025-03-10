@@ -1,5 +1,5 @@
 const END_POINT = 'https://23.objects.htmlacademy.pro/big-trip';
-const AUTHORIZATION = 'Basic SPBSPBSPB2';
+const AUTHORIZATION = 'Basic SPBSPBSPB52';
 
 const HttpMethod = {
   GET: 'GET',
