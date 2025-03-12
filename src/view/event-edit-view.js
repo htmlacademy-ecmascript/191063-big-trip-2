@@ -289,7 +289,7 @@ export default class EventEditView extends AbstractStatefulView {
       this.element.querySelector(`#event-start-time-${this._state.id}`),
       {
         ...getFlatpickrConfig(),
-        onClose: this.#dateFromCloseHandler,
+        onChange: this.#dateFromCloseHandler,
       },
     );
   }
@@ -300,7 +300,7 @@ export default class EventEditView extends AbstractStatefulView {
       {
         ...getFlatpickrConfig(),
         minDate: this._state.dateFrom,
-        onClose: this.#dateToCloseHandler,
+        onChange: this.#dateToCloseHandler,
       },
     );
   }
